@@ -1,0 +1,15 @@
+ALTER TABLE `payments` CHANGE `payment_method` `payment_method` ENUM('stripe','manual','world_line') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Stripe, Manual';
+ALTER TABLE `payments` CHANGE `payment_type` `payment_type` ENUM('tournament','subscription','ecom') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tournament, Subscription';
+
+
+ALTER TABLE `payments` CHANGE `payment_type` `payment_type` ENUM('tournament','subscription','ecom','tournament_ecom','sweepstake') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Tournament, Subscription';
+
+UPDATE `email_templates` SET `shortcodes` = 'tournament_name,team_name,invited_by,join_url,login_url' WHERE `email_templates`.`id` = 4;
+
+ALTER TABLE tournament_team_anglers
+ADD CONSTRAINT unique_tournament_team_member UNIQUE (tournament_team_id, member_id);
+
+ALTER TABLE `orders` CHANGE `payment_type` `payment_type` ENUM('COD','Digital','Manual') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'COD' COMMENT 'cod, digital';
+
+// From 19-03-25
+ALTER TABLE `payments` CHANGE `payment_status` `payment_status` ENUM('success','failed','abundant') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Success, Failed';
